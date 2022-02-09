@@ -148,3 +148,27 @@ ar.join(",") # => "aa,bb,cc"
 
 # 文字列.strip
 "  abc  ".strip # => "abc"  前後のスペースを除去してくれる
+
+
+
+# practice
+
+puts "ABCDEF"[3...-1] # => DE
+
+s = "/ruby/exam/index.html" # 3番目に出現する「/」の位置(文字列中で何文字目か)を出力する
+puts ?? # => s.index("/", 3)
+
+str = "abcdef"
+??? # => str[ab(cdef)] = "ba"  「エラーが出るので本当に正しいのか？」
+puts str # abba
+
+puts "0123456789-".delete("0-28-")
+# => "345679"  0,1,2 と 8,- が削除される
+
+p "foo\nbar\nbaz".split(/\n/, 2) # => ["foo", "bar\nbaz"]
+
+str = "abc\r\n\r\n".chomp('')
+p str # => "abc"  \r は \n と同じ
+
+str = "abc\r\n".chop
+p str # => "abc"  \r\n を改行コード１文字と認識するため
