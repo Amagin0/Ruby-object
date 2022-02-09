@@ -1,24 +1,24 @@
-num = 3.333
+num = 3.555
 
-num.round    # A.3...四捨五入
-num.floor    # A.3...切り下げ
-num.ceil     # A.4...切り上げ
-num.truncate # A.3...切り捨て
+num.round    # => 4...四捨五入
+num.floor    # => 3...切り下げ
+num.ceil     # => 4...切り上げ
+num.truncate # => 3...切り捨て
 
-0.zero? # ゼロかどうかの判定(true/false)
-3.odd?  # 奇数かどうかの判定(true/false)
-3.even? # 偶数かどうかの判定(true/false)
+数字.zero? # ゼロかどうかの判定(true/false)
+数字.odd?  # 奇数かどうかの判定(true/false)
+数字.even? # 偶数かどうかの判定(true/false)
 
 # Math::PI  πを表す定数
-3 * 3 * Math::PI
+3 * 3 * Math::PI # => 28.274333882308138
 
 # Math.sqrt  平方根を求めるクラスメソッド
 Math.sqrt(4) # => 2
 
 # 整数を扱う
-# Integer => Fixnum,Bignum
+Integer => Fixnum,Bignum
 # 小数点を扱う
-# Float
+Float
 
 "3.33".to_i # 3になってしまう
 "3.33".to_f # 3.33で出力
@@ -91,7 +91,7 @@ str.gsub(/ab/,"xy") # => "xyxyxycd"
 
 # !は破壊的メソッド。元の変数が変化する
 str.sub!(/ab/,"xy") # => "xyababcd" 
-str.gsub!(/cd/,"xy") # => "xyababxy" 
+str.gsub!(/cd/,"xy") # => "xyababxy"  ...前述でab が xy に変わっているため
 
 
 # ---------文字列の検索(index, rindex)--------- 
@@ -118,7 +118,6 @@ str.gsub!(/cd/,"xy") # => "xyababxy"
 
 
 # ---------型変換：文字列　の分割して配列を作成する(split ←→ join)---------
-
 # 文字列.split   空白もしくは指定文字列を区切りとして、文字列から配列を作成
 "aa bb cc".split # => ["aa", "bb", "cc"]
 
@@ -150,25 +149,30 @@ ar.join(",") # => "aa,bb,cc"
 "  abc  ".strip # => "abc"  前後のスペースを除去してくれる
 
 
-
-# practice
-
+# --------practice--------
+# 1
 puts "ABCDEF"[3...-1] # => DE
 
+# 2
 s = "/ruby/exam/index.html" # 3番目に出現する「/」の位置(文字列中で何文字目か)を出力する
 puts ?? # => s.index("/", 3)
 
+# 3
 str = "abcdef"
 ??? # => str[ab(cdef)] = "ba"  「エラーが出るので本当に正しいのか？」
 puts str # abba
 
+# 4
 puts "0123456789-".delete("0-28-")
 # => "345679"  0,1,2 と 8,- が削除される
 
+# 5
 p "foo\nbar\nbaz".split(/\n/, 2) # => ["foo", "bar\nbaz"]
 
+# 6
 str = "abc\r\n\r\n".chomp('')
 p str # => "abc"  \r は \n と同じ
 
+# 7
 str = "abc\r\n".chop
 p str # => "abc"  \r\n を改行コード１文字と認識するため
