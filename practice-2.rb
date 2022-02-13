@@ -27,3 +27,86 @@
 "aaa@aaa.com" =~ /@/      # => 3
 "aaa@aaa.com" =~ /com$/   # => 8 ...行末に存在しているか検索
 "aaa@aaa.com  " =~ /com$/ # => nil
+
+
+
+
+# -----------配列の作り方----------
+# 空の配列を作成するとして、あとから拡張する
+arr = []
+arr[0] = "value"
+
+# %w 記法
+arr = %w"apple banana cherry" # => ["apple", "banana", "cherry"]
+
+# 文字列を配列に型変換する
+"apple banana cherry".split <=> ["apple", "banana", "cherry"].join("")
+
+
+# -----------配列はインデックスで操作する----------
+# 配列[0]    ...配列のインデックス０番目
+# 配列[1,2]  ...配列のインデックス１番目から２つ
+# 配列[3..5] ...配列のインデックス３番目から５番目
+
+ar = ["aa", "bb", "cc"]
+ar[1]    # => "bb"
+ar[1,2]  # => ["bb", "cc"]
+ar[0..1] # => ["aa", "bb"]
+
+
+# -----------配列を繰り返して、中身を捜査する----------
+ar = %w"aa bb cc dd"
+ar.each do |v|
+  puts v
+end
+# => aa bb cc dd
+
+ar.each_with_index do |v,idx|
+  puts "インデックス#{idx}番目は #{v} です"
+end
+# インデックス0番目は aa です
+# インデックス1番目は bb です
+# インデックス2番目は cc です
+# インデックス3番目は dd です
+
+
+# -----------配列を繰り返して、中身を置き換える----------
+# 配列.map! do |x|
+# 置き換え式
+# end
+ar = %w"aa bb cc dd"
+ar.map! do |v|
+  V + "999"
+end
+p ar # => ["aa999", "bb999", "cc999", "dd999"]
+
+
+# -----------配列の要素を判定して、条件に一致したものを抽出する----------
+# Hitした１件のみ抽出
+# 配列.detect do |x|
+# 判定条件式
+# end
+
+# Hitした全てを抽出
+# 配列.select do |x|
+# 判定条件式
+# end
+ar = %w"apple banana apple orange"
+ar.select! do |v|
+  v != "apple"
+end
+p ar # => ["apple", "apple"]
+
+
+# -----------配列から要素を削除する----------
+ar = %w"apple banana apple orange"
+
+#配列.delete(指定の値)
+ar.delete("apple")
+p ar # => ["banana", "orange"]
+
+#配列.delete_at(インデックス番号)
+ar.delete_at(1)
+p ar # => ["apple", "apple", "orange"]
+
+#配列.delete_if ブロック条件式
