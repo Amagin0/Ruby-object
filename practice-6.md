@@ -34,7 +34,7 @@ end
 
 冷蔵庫 モデルAクラス
 -----------
-``` ruby:reizouko.rb
+``` ruby
 class ReizoukoA
   # 設定温度を受け取ってインスタンス変数に保持する
   def initialize( num )
@@ -104,10 +104,11 @@ apple
 ```
 </details>
 
-- モジュールとは...
-  - 「共通部品集」のようなもの。
-  - 「継承」は **できない** 
-  - 「インスタンスの生成」も **できない** 
+モジュールとは...
+----------
+- 「共通部品集」のようなもの。
+- 「継承」は **できない** 
+- 「インスタンスの生成」も **できない** 
 
 モジュールの作り方
 ----------
@@ -120,23 +121,13 @@ end
 
 冷蔵庫モデルAで電源機能を「部品化」する
 ----------
-``` ruby:power.rb
-# モジュール化
-# include されると内部のメソッドだけが相手先で展開される
-
-module Power
-  # 電源ON
-  def power( onoff )
-    puts "電源を入れました" if onoff.to_sym == :on
-    puts "電源を切りました" if onoff.to_sym == :off
-  end
-end
-```
 
 <details><summary>冷蔵庫 モデルAクラス</summary>
 
-``` ruby:reizouko.rb
-# 変更した箇所
+``` ruby
+# reizoukoA.rb
+
+# 追加
 + requier "./power.rb"
 
 class ReizoukoA
@@ -173,25 +164,110 @@ class ReizoukoA
     @foodstuff << str
   end
 
-  # 変更した箇所
+  # 追加と削除
 - def power( onoff )
-    puts "電源を入れました" if onoff.to_sym == :on
-    puts "電源を切りました" if onoff.to_sym == :off
-  end
+-   puts "電源を入れました" if onoff.to_sym == :on
+-   puts "電源を切りました" if onoff.to_sym == :off
+- end
+
 + include Power
 
 end
 ```  
+</details>    
+
+### モジュール化
+``` ruby
+# power.rb
+
+module Power
+  # 電源ON
+  def power( onoff )
+    puts "電源を入れました" if onoff.to_sym == :on
+    puts "電源を切りました" if onoff.to_sym == :off
+  end
+end 
+# include されると内部のメソッドだけが相手先で展開される
+```
+
+「ひな型(設計図)」ってどういうこと？
+----------
+- 違う設計図を **引用して(受け継いで)** 、バージョンアップさせて新たな設計図にすることが出来る
+
+### これを **「継承」** という
+
+- 設計図を継承して、既存の **機能を上書き** してバージョンアップさせることが出来る
+
+### これを **「オーバーライド」** という
+
+継承する方法・オーバーライドする方法
+----------
+``` ruby
+class クラス名 < 継承させる親クラス名
+  追加する機能を定義
+  既存の機能を再定義
+  # 同名のメソッドをもう一度定義すると、上書きしたことになる
+end
+```
+
+Railsでは
+----------
+- データベースを管理する「モデル」はクラスになっている
+- 「モデル」はActiveRecordクラスを継承している
+``` ruby
+class User < ApplicationRecord
+
+class ApplicationRecord < ActiveRecord::Base
+# 上記のように書かれている
+```  
+
+冷蔵庫モデルAを継承したモデルBの作成(冷却機能が強化)
+----------
+``` ruby  
+# reizoukoB.rb
+
+# 冷蔵庫モデルB クラス
+# モデルAを継承する
+require "./reizouko.rb"
+
+class ReizoukoB < ReizoukoA
+  # 既存の機能を上書きする
+  # 同名のメソッドがあればオーバーライドされる
+  # 既に定義されているものは改めて書く必要がない
+  def cool_down
+    @temperature -= 3
+    puts "冷やす機能がパワーアップしました"
+    puts "現在の温度は #{@temperature} です"
+  end
+end
+```
 
 実行制御
 ----------
 ``` ruby
 if __FILE__ == $0 then
-  modelA = ReizoukoA.new(15)
-  modelA.cool_down
-  modelA.puts_in("apple")
-  modelA.open_door
-  modelA.power(:off)
-end
-```  
-</details>
+  reizoukoB = ReizoukoB.new(15)
+  reizoukoB.cool_down
+  reizoukoB.power(:off)
+end 
+
+```
+
+実行結果
+----------
+```
+電源を入れました
+設定温度を 15 に設定しました
+現在の温度は 25 です
+0 個の食材があります
+冷やす機能がパワーアップしました
+現在の温度は 22 です
+電源を切りました
+```
+
+さらに知識っ！！
+----------
+- 複数のクラスから同時に並行して継承することは **出来ない。** これを **「単一継承」** という。
+- クラスの継承とモジュールのinclude を同時に使うことが出来る。これを **「Mix-in」** という。
+- 文字列クラスや配列クラスなど、すべての親クラスをたどっていくと、Objectクラスにたどり着く。
+- Objectクラスがすべての始祖。究極のスーパークラス。
