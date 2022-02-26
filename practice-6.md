@@ -17,6 +17,7 @@
 
 <details><summary>クラスの作り方(サンプルコード)</summary>
 ------------
+
 ``` Ruby
 class クラス名
   def initialize(引数)
@@ -86,6 +87,7 @@ if __FILE__ == $0 then
   modelA.power(:off)
 end
 ```  
+
 実行結果
 ----------
 ```
