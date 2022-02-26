@@ -5,4 +5,5 @@ Udemy-ちゃんとRubyを学ぼう！オブジェクト思考機能ってなん�
 - practice-2  正規表現、配列クラス
 - practice-3  シンボルクラス、ハッシュクラス
 - practice-4  Fileクラス、Dirクラス
-- practice-4  Timeクラス
+- practice-5  Timeクラス
+- practice-6  オブジェクト指向機能
