@@ -17,7 +17,7 @@
 
 クラスの作り方
 ----------
-``` Ruby
+``` ruby
 class クラス名
   def initialize(引数)
     初期化処理
@@ -79,7 +79,7 @@ end
 
 実行制御
 ----------
-``` Ruby
+``` ruby
 if __FILE__ == $0 then
   modelA = ReizoukoA.new(15)
   modelA.cool_down
@@ -120,7 +120,7 @@ end
 
 冷蔵庫モデルAで電源機能を「部品化」する
 ----------
-```ruby:power.rb
+``` ruby:power.rb
 # モジュール化
 # include されると内部のメソッドだけが相手先で展開される
 
@@ -137,7 +137,7 @@ end
 
 ``` ruby:reizouko.rb
 # 変更した箇所
-`requier "./power.rb"`
++ requier "./power.rb"
 
 class ReizoukoA
   # 設定温度を受け取ってインスタンス変数に保持する
@@ -174,13 +174,18 @@ class ReizoukoA
   end
 
   # 変更した箇所
-  `include Power`
+- def power( onoff )
+    puts "電源を入れました" if onoff.to_sym == :on
+    puts "電源を切りました" if onoff.to_sym == :off
+  end
++ include Power
+
 end
 ```  
 
 実行制御
 ----------
-``` Ruby
+``` ruby
 if __FILE__ == $0 then
   modelA = ReizoukoA.new(15)
   modelA.cool_down
